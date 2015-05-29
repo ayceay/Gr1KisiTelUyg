@@ -12,7 +12,7 @@
         <ui:composition template="./mainTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="frm">
                     <p:panel header="Kişi Ekle">
                         <p:messages showDetail="true"/>
                         <p:panelGrid columns="3">
@@ -32,7 +32,8 @@
                             <p:message for="soyad" id="soyadMsg"/>
                             
                             <p:outputLabel value="Doğum Tarihi : " />
-                            <p:calendar pattern="dd.MM.yyyy" value="#{kisiBean.kisi.dogtar}" id="dogtar"/>
+                            <p:calendar pattern="dd.MM.yyyy" value="#{kisiBean.kisi.dogtar}" id="dogtar"
+                                        showOn="button" navigator="true"/>
                             <p:message for="dogtar" id="dogtarMsg"/>
                             
                             <p:outputLabel value="Maaş : " />
@@ -46,12 +47,30 @@
                             </p:selectOneMenu>
                             <p:message for="evTur" id="evTurMsg"/>
                             
+                            <p:outputLabel value="Tel No : " />
+                            <p:inputText id ="telEv" value="#{kisiBean.evTel.telno}" required="true" label="Ev Tel No"
+                                         requiredMessage="Telefon Boş Geçilemez">
+                                <p:ajax event="keyup" update="evTelMsg"/>
+                            </p:inputText>
+                            <p:message id="evTelMsg" for="telEv"/>
+                            
                             <p:outputLabel value="Tür(Cep)"/>
-                            <p:selectOneMenu id="evTur" value="#{kisiBean.evTel.tur}">
-                                <f:selectItem itemLabel="Ev" itemValue="EV"/>
+                            <p:selectOneMenu id="cepTur" value="#{kisiBean.cepTel.tur}" >
                                 <f:selectItem itemLabel="Cep" itemValue="CEP"/>
+                                <f:selectItem itemLabel="Ev" itemValue="EV"/>                                
                             </p:selectOneMenu>
-                            <p:message for="evTur" id="evTurMsg"/>
+                            <p:message for="cepTur" id="cepTurMsg"/>
+                            
+                            <p:outputLabel value="Tel No : " />
+                            <p:inputText id ="telCep" value="#{kisiBean.cepTel.telno}" required="true" label="Cep Tel No"
+                                         requiredMessage="Telefon Boş Geçilemez">
+                                <p:ajax event="keyup" update="cepTelMsg"/>
+                            </p:inputText>
+                            <p:message id="cepTelMsg" for="telCep"/>
+                            
+                            <p:outputLabel/>
+                            <p:commandButton id="btnEkle" value="Ekle" action="#{kisiBean.kisiEkle()}"
+                                             update="frm"/>
                         </p:panelGrid>
                     </p:panel>
                 </h:form>

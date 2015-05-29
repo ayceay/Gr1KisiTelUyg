@@ -7,6 +7,7 @@ package tr.gov.ptt.gr1kisiteluyg.facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tr.gov.ptt.gr1kisiteluyg.entity.Giris;
 
@@ -16,7 +17,7 @@ import tr.gov.ptt.gr1kisiteluyg.entity.Giris;
  */
 @Stateless
 public class GirisFacade extends AbstractFacade<Giris> {
-    @PersistenceContext(unitName = "tr.gov.ptt_Gr1KisiTelUyg_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "ptt_Gr1KisiTelUygPU")
     private EntityManager em;
 
     @Override
@@ -30,11 +31,18 @@ public class GirisFacade extends AbstractFacade<Giris> {
     
     public boolean girisKontrol(Giris p_giris)
     {
-        Giris g = (Giris)em.createNamedQuery("findByAdandSifre")
+        Giris g = null;
+        try{
+        g = (Giris)em.createNamedQuery("Giris.findByAdandSifre")
                 .setParameter("ad", p_giris.getAd())
                 .setParameter("sifre", p_giris.getSifre())
                 .getSingleResult();
-        
+        }
+        catch( NoResultException exp )
+        {
+            System.out.println(exp.getMessage());
+            
+        }
         if(g != null)
         {
             return true;
