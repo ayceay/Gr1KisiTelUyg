@@ -34,4 +34,6 @@ public class KisiFacade extends AbstractFacade<Kisi> {
        return em.createQuery("select k from Kisi k order by k.no").getResultList();
     }
     
+    
+    
 }

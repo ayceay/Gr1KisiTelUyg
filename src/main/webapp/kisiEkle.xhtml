@@ -19,14 +19,19 @@
                             
                             <p:outputLabel value="Ad : " />
                             <p:inputText id ="ad" value="#{kisiBean.kisi.ad}" required="true" label="Ad"
-                                         requiredMessage="Ad Boş Geçilemez">
+                                         >
+                                <p:ajax event="blur" update="adMsg"/>
                                 <p:ajax event="keyup" update="adMsg"/>
                             </p:inputText>
                             <p:message id="adMsg" for="ad"/>
                             
                             <p:outputLabel value="Soyad : " />
                             <p:inputText id ="soyad" value="#{kisiBean.kisi.soyad}" required="true" label="Soyad"
-                                         requiredMessage="Soyad Boş Geçilemez">
+                                         >
+                               
+                                <f:validateLength minimum="4"/>                                   
+                                
+                                 <p:ajax event="blur" update="soyadMsg"/>
                                 <p:ajax event="keyup" update="soyadMsg"/>
                             </p:inputText>
                             <p:message for="soyad" id="soyadMsg"/>

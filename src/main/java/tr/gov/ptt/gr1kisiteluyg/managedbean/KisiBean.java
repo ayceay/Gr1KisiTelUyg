@@ -5,11 +5,16 @@
  */
 package tr.gov.ptt.gr1kisiteluyg.managedbean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 import tr.gov.ptt.gr1kisiteluyg.entity.Kisi;
 import tr.gov.ptt.gr1kisiteluyg.entity.Telefon;
 import tr.gov.ptt.gr1kisiteluyg.service.KisiService;
@@ -19,8 +24,8 @@ import tr.gov.ptt.gr1kisiteluyg.service.KisiService;
  * @author Administrator
  */
 @ManagedBean
-@RequestScoped
-public class KisiBean {
+@ViewScoped // viewscope ile request scope u araştır
+public class KisiBean implements Serializable{
     
     private Kisi kisi;
     private Telefon evTel;
@@ -57,6 +62,7 @@ public class KisiBean {
     }
 
     public List<Kisi> getKisiList() {
+        if(kisiList.size() == 0)
         this.kisiList = kisiListeleSirali();
         return kisiList;
     }
@@ -94,6 +100,42 @@ public class KisiBean {
     {
         this.kisiList = kisiService.kisiListeleSirali();
         return this.kisiList;
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+        Kisi user = (Kisi) event.getObject();
+        kisiService.kisiGuncelle(user);
+        FacesMessage msg = new FacesMessage("Güncellenen Kişi No : " + user.
+                getNo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        Kisi user = (Kisi) event.getObject();
+        FacesMessage msg = new FacesMessage("Güncelleme İptal Edildi.Kişi No: "+ user.getNo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public List<String> completeText(String query)
+    {
+        List<Kisi> kisiListesi = kisiService.kisiListele();
+        List<String> sonuc = new ArrayList<String>();
+        if(kisiListesi.size() > 0)
+        {
+            for (Kisi kisi : kisiListesi) {
+                if(kisi.getAd().startsWith(query))
+                {
+                    sonuc.add(kisi.getAd());
+                }
+            }
+        }
+        
+        if(sonuc.size() == 0)
+        {
+            sonuc.add("Sonuç Yok");
+        }
+        
+        return sonuc;
     }
     
 }

@@ -7,7 +7,6 @@ package tr.gov.ptt.gr1kisiteluyg.managedbean;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
 import tr.gov.ptt.gr1kisiteluyg.entity.Giris;

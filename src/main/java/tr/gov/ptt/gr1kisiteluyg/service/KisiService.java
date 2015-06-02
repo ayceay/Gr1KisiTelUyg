@@ -35,4 +35,9 @@ public class KisiService {
         return kisiFacade.kisiListeleSirali();
     }
     
+     public void kisiGuncelle(Kisi p_kisi)
+    {
+        kisiFacade.edit(p_kisi);
+    }
+    
 }

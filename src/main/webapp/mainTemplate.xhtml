@@ -37,16 +37,18 @@
                           effect="drop">
                 <ui:insert name="left">
                     <h:form>
-                        <p:panelMenu style="width: 100%">
+                        <p:panelMenu style="width: 100%" rendered="false">
                             <p:submenu label="Kişi İşlemleri">
                                 <p:menuitem value="Kişi Ekle" outcome="kisiEkle.xhtml?faces-redirect=true"></p:menuitem>
                                 <p:menuitem value="Kişi Listele" outcome="kisiListele.xhtml?faces-redirect=true"></p:menuitem>
-                               
+                                <p:menuitem value="Kişi Ara" outcome="kisiAra.xhtml?faces-redirect=true"></p:menuitem>
                             </p:submenu>
                             <p:submenu label="Kişi İşlemleri">
                                <p:menuitem value="Giriş" outcome="giris.xhtml?faces-redirect=true"></p:menuitem>
                             </p:submenu>
-                        </p:panelMenu>                        
+                        </p:panelMenu>  
+                        
+                        <p:menu model="#{menuBean.model}" />
                     </h:form>
                 </ui:insert>
             </p:layoutUnit>

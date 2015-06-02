@@ -12,20 +12,41 @@
         <ui:composition template="./mainTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="frm">
+                    <p:growl id="msgs" showDetail="true"/>
                     <p:panel header="Kişi Listesi">
                         <p:dataTable var="kisi" value="#{kisiBean.kisiList}" paginator="true" rows="2"
-                                     rowsPerPageTemplate="2,5,10,15">
+                                     rowsPerPageTemplate="2,5,10,15" editable="true">
+                            <p:ajax event="rowEdit" listener="#{kisiBean.onRowEdit}" update=":frm:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{kisiBean.onRowCancel}" update=":frm:msgs"/>
+                            
+                            
                             <p:column headerText="Kişi No" filterBy="#{kisi.no}" sortBy="#{kisi.no}">
                                 <h:outputText value="#{kisi.no}" />
                             </p:column>
 
                             <p:column headerText="Kişi Ad" filterBy="#{kisi.ad}" sortBy="#{kisi.ad}">
-                                <h:outputText value="#{kisi.ad}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{kisi.ad}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{kisi.ad}" />
+                                    </f:facet>
+                                </p:cellEditor>
+                                
                             </p:column>
                             
                             <p:column headerText="Kişi Soyad" filterBy="#{kisi.soyad}" sortBy="#{kisi.soyad}">
-                                <h:outputText value="#{kisi.soyad}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{kisi.soyad}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{kisi.soyad}" />
+                                    </f:facet>
+                                </p:cellEditor>
+                                
                             </p:column>
                             
                             <p:column headerText="Kişi Doğum Tarihi">
@@ -39,7 +60,21 @@
                             </p:column>
                             
                             <p:column headerText="Kişi Telefon">
-                                <h:outputText value="#{kisi.telefonList[0].telno}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                         <h:outputText value="#{kisi.telefonList[0].telno}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{kisi.telefonList[0].telno}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                                              
+                               
+                            </p:column>
+                            
+                            <p:column style="width: 6%">
+                                <p:rowEditor/>
+                                
                             </p:column>
                             
                             <f:facet name="footer">
